@@ -2,27 +2,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Categories on Chris Carvelli</title>
-    <link>http://localhost:1313/categories/</link>
+    <link>https://chris-carvelli.github.io/categories/</link>
     <description>Recent content in Categories on Chris Carvelli</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <managingEditor>carve.chris@gmail.com (Chris Carvelli)</managingEditor>
     <webMaster>carve.chris@gmail.com (Chris Carvelli)</webMaster>
-    <lastBuildDate>Thu, 01 May 2025 14:48:35 +0200</lastBuildDate>
-    <atom:link href="http://localhost:1313/categories/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Shorts</title>
-      <link>http://localhost:1313/categories/shorts/</link>
-      <pubDate>Thu, 01 May 2025 14:48:35 +0200</pubDate><author>carve.chris@gmail.com (Chris Carvelli)</author>
-      <guid>http://localhost:1313/categories/shorts/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Tutorial</title>
-      <link>http://localhost:1313/categories/tutorial/</link>
-      <pubDate>Thu, 01 May 2025 14:19:15 +0200</pubDate><author>carve.chris@gmail.com (Chris Carvelli)</author>
-      <guid>http://localhost:1313/categories/tutorial/</guid>
-      <description></description>
-    </item>
+    <atom:link href="https://chris-carvelli.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>
