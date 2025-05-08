@@ -3,7 +3,7 @@
 
 <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
     <title>
-Fast Lookat | Chris Carvelli
+Non-oriented Lookat | Chris Carvelli
 </title>
 
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
@@ -17,7 +17,7 @@ Fast Lookat | Chris Carvelli
 
 
 
-<link href="/css/style.min.4d94342463680c1bd5e699a6e768deb04a42209b49ead6daa3f3e5820aa08b8e.css" rel="stylesheet">
+<link href="/css/style.min.8ed3bbcd00079e01c8079a0d6053aabf3b0138b6e6eb909413c1b3fe25785384.css" rel="stylesheet">
 
 
 
@@ -59,7 +59,7 @@ Fast Lookat | Chris Carvelli
             <main class="main">
                 
 <div class="postWrapper">
-    <h1>Fast Lookat</h1>
+    <h1>Non-oriented Lookat</h1>
     
     
     <section class="postMetadata">
@@ -82,18 +82,64 @@ Fast Lookat | Chris Carvelli
             
                 <dt>published</dt>
                 
-                <dd><time datetime="2025-05-01">May 1, 2025</time></dd>
+                <dd><time datetime="2025-05-07">May 7, 2025</time></dd>
             
             
                 <dt>reading time</dt>
-                <dd>1 minute</dd>
+                <dd>2 minutes</dd>
             
         </dl>
     </section>
     
     <div>
-        <p>hello</p>
-
+        <p>Useful when we want to have an object pointing in the direction of a vector, but we don&rsquo;t care about orientation.</p>
+<p>It&rsquo;s important to note that this is not just a potential optimization. Not having an <code>up</code> vector means that we don&rsquo;t have to worry about degenerate cases where <code>up</code> and <code>dir</code> are aligned.</p>
+<p>The classic use case (and the reason I put this together) is to compute the world matrix of debug rays and gizmo arms. Using <code>lookAt</code> to draw force applications and basis vectors is annoying and error-prone, all to draw entities that don&rsquo;t have an orientation anyway.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>glm<span style="color:#f92672">::</span>mat4 rotate_towards(glm<span style="color:#f92672">::</span>vec3 dir) {
+</span></span><span style="display:flex;"><span>	dir <span style="color:#f92672">=</span> glm<span style="color:#f92672">::</span>normalize(dir);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	glm<span style="color:#f92672">::</span>vec3 u <span style="color:#f92672">=</span> glm<span style="color:#f92672">::</span>vec3(<span style="color:#ae81ff">0</span>, dir.z, dir.y);	<span style="color:#75715e">// basis vector right
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	glm<span style="color:#f92672">::</span>vec3 w <span style="color:#f92672">=</span> glm<span style="color:#f92672">::</span>cross(dir, u);			<span style="color:#75715e">// basis vector up
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	glm<span style="color:#f92672">::</span>mat4 mtx <span style="color:#f92672">=</span> glm<span style="color:#f92672">::</span>mat4(<span style="color:#ae81ff">0.0f</span>);
+</span></span><span style="display:flex;"><span>	mtx[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> glm<span style="color:#f92672">::</span>vec4(u, <span style="color:#ae81ff">0.0f</span>);
+</span></span><span style="display:flex;"><span>	mtx[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> glm<span style="color:#f92672">::</span>vec4(w, <span style="color:#ae81ff">0.0f</span>);
+</span></span><span style="display:flex;"><span>	mtx[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">=</span> glm<span style="color:#f92672">::</span>vec4(dir, <span style="color:#ae81ff">0.0f</span>);				<span style="color:#75715e">// dir is, by definition,
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>												<span style="color:#75715e">// our forward vector
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	mtx[<span style="color:#ae81ff">3</span>][<span style="color:#ae81ff">3</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">1.0f</span>;
+</span></span><span style="display:flex;"><span>	
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> mtx;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// bake in translation
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>glm<span style="color:#f92672">::</span>mat4 rotate_towards(glm<span style="color:#f92672">::</span>vec3 pos, glm<span style="color:#f92672">::</span>vec3 dir) {
+</span></span><span style="display:flex;"><span>	dir <span style="color:#f92672">=</span> glm<span style="color:#f92672">::</span>normalize(dir);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	glm<span style="color:#f92672">::</span>vec3 u <span style="color:#f92672">=</span> glm<span style="color:#f92672">::</span>vec3(<span style="color:#ae81ff">0</span>, dir.z, dir.y);
+</span></span><span style="display:flex;"><span>	glm<span style="color:#f92672">::</span>vec3 w <span style="color:#f92672">=</span> glm<span style="color:#f92672">::</span>cross(dir, u);
+</span></span><span style="display:flex;"><span>	glm<span style="color:#f92672">::</span>mat4 mtx <span style="color:#f92672">=</span> glm<span style="color:#f92672">::</span>mat4(<span style="color:#ae81ff">0.0f</span>);
+</span></span><span style="display:flex;"><span>	mtx[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> glm<span style="color:#f92672">::</span>vec4(u, <span style="color:#ae81ff">0.0f</span>);
+</span></span><span style="display:flex;"><span>	mtx[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> glm<span style="color:#f92672">::</span>vec4(w, <span style="color:#ae81ff">0.0f</span>);
+</span></span><span style="display:flex;"><span>	mtx[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">=</span> glm<span style="color:#f92672">::</span>vec4(dir, <span style="color:#ae81ff">0.0f</span>);
+</span></span><span style="display:flex;"><span>	mtx[<span style="color:#ae81ff">3</span>] <span style="color:#f92672">=</span> glm<span style="color:#f92672">::</span>vec4(pos, <span style="color:#ae81ff">1.0f</span>);
+</span></span><span style="display:flex;"><span>	
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> mtx;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// bake in scale
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>glm<span style="color:#f92672">::</span>mat4 rotate_towards(glm<span style="color:#f92672">::</span>vec3 pos, glm<span style="color:#f92672">::</span>vec3 dir, <span style="color:#66d9ef">float</span> length) {
+</span></span><span style="display:flex;"><span>	dir <span style="color:#f92672">=</span> dir <span style="color:#f92672">=</span> glm<span style="color:#f92672">::</span>normalize(dir) <span style="color:#f92672">*</span> length;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	glm<span style="color:#f92672">::</span>vec3 u <span style="color:#f92672">=</span> glm<span style="color:#f92672">::</span>vec3(<span style="color:#ae81ff">0</span>, dir.z, dir.y);
+</span></span><span style="display:flex;"><span>	glm<span style="color:#f92672">::</span>vec3 w <span style="color:#f92672">=</span> glm<span style="color:#f92672">::</span>cross(dir, u);
+</span></span><span style="display:flex;"><span>	glm<span style="color:#f92672">::</span>mat4 mtx <span style="color:#f92672">=</span> glm<span style="color:#f92672">::</span>mat4(<span style="color:#ae81ff">0.0f</span>);
+</span></span><span style="display:flex;"><span>	mtx[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> glm<span style="color:#f92672">::</span>vec4(u, <span style="color:#ae81ff">0.0f</span>);
+</span></span><span style="display:flex;"><span>	mtx[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> glm<span style="color:#f92672">::</span>vec4(w, <span style="color:#ae81ff">0.0f</span>);
+</span></span><span style="display:flex;"><span>	mtx[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">=</span> glm<span style="color:#f92672">::</span>vec4(dir, <span style="color:#ae81ff">0.0f</span>);
+</span></span><span style="display:flex;"><span>	mtx[<span style="color:#ae81ff">3</span>] <span style="color:#f92672">=</span> glm<span style="color:#f92672">::</span>vec4(pos, <span style="color:#ae81ff">1.0f</span>);
+</span></span><span style="display:flex;"><span>	
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> mtx;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div>
     </div>
 </div>
 
