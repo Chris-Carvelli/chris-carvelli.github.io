@@ -2,19 +2,26 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Chris Carvelli</title>
-    <link>https://chris-carvelli.github.io/</link>
+    <link>http://localhost:1313/</link>
     <description>Recent content on Chris Carvelli</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <managingEditor>carve.chris@gmail.com (Chris Carvelli)</managingEditor>
     <webMaster>carve.chris@gmail.com (Chris Carvelli)</webMaster>
-    <lastBuildDate>Mon, 01 Jan 0001 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://chris-carvelli.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 07 May 2025 16:44:00 +0200</lastBuildDate>
+    <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Non-oriented Lookat</title>
+      <link>http://localhost:1313/posts/shorts/fast-lookat/</link>
+      <pubDate>Wed, 07 May 2025 16:44:00 +0200</pubDate><author>carve.chris@gmail.com (Chris Carvelli)</author>
+      <guid>http://localhost:1313/posts/shorts/fast-lookat/</guid>
+      <description>&lt;p&gt;Useful when we want to have an object pointing in the direction of a vector, but we don&amp;rsquo;t care about orientation.&lt;/p&gt;&#xA;&lt;p&gt;It&amp;rsquo;s important to note that this is not just a potential optimization. Not having an &lt;code&gt;up&lt;/code&gt; vector means that we don&amp;rsquo;t have to worry about degenerate cases where &lt;code&gt;up&lt;/code&gt; and &lt;code&gt;dir&lt;/code&gt; are aligned.&lt;/p&gt;&#xA;&lt;p&gt;The classic use case (and the reason I put this together) is to compute the world matrix of debug rays and gizmo arms. Using &lt;code&gt;lookAt&lt;/code&gt; to draw force applications and basis vectors is annoying and error-prone, all to draw entities that don&amp;rsquo;t have an orientation anyway.&lt;/p&gt;</description>
+    </item>
     <item>
       <title>About Chris</title>
-      <link>https://chris-carvelli.github.io/about/</link>
+      <link>http://localhost:1313/about/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><author>carve.chris@gmail.com (Chris Carvelli)</author>
-      <guid>https://chris-carvelli.github.io/about/</guid>
+      <guid>http://localhost:1313/about/</guid>
       <description>&lt;p&gt;&lt;img src=&#34;images/picture.png&#34; alt=&#34;picture&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;Hi! I&amp;rsquo;m Chris, a programmer and teacher based in Copenhagen, DK.&lt;/p&gt;&#xA;&lt;p&gt;I&amp;rsquo;ve been a C++ programmer for a while, but over the last 6 years or so I worked a lot in game development, touching almost everything that has to do with programming, but with a focus on engines and other low level systems.&lt;/p&gt;&#xA;&lt;p&gt;Besides the corporate and startup stuff, I have a lot of personal projects. Most of them are private, but of the public ones:&lt;/p&gt;</description>
     </item>
   </channel>

@@ -2,13 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on Chris Carvelli</title>
-    <link>https://chris-carvelli.github.io/posts/</link>
+    <link>http://localhost:1313/posts/</link>
     <description>Recent content in Posts on Chris Carvelli</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <managingEditor>carve.chris@gmail.com (Chris Carvelli)</managingEditor>
     <webMaster>carve.chris@gmail.com (Chris Carvelli)</webMaster>
-    <lastBuildDate></lastBuildDate>
-    <atom:link href="https://chris-carvelli.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 07 May 2025 16:44:00 +0200</lastBuildDate>
+    <atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Non-oriented Lookat</title>
+      <link>http://localhost:1313/posts/shorts/fast-lookat/</link>
+      <pubDate>Wed, 07 May 2025 16:44:00 +0200</pubDate><author>carve.chris@gmail.com (Chris Carvelli)</author>
+      <guid>http://localhost:1313/posts/shorts/fast-lookat/</guid>
+      <description>&lt;p&gt;Useful when we want to have an object pointing in the direction of a vector, but we don&amp;rsquo;t care about orientation.&lt;/p&gt;&#xA;&lt;p&gt;It&amp;rsquo;s important to note that this is not just a potential optimization. Not having an &lt;code&gt;up&lt;/code&gt; vector means that we don&amp;rsquo;t have to worry about degenerate cases where &lt;code&gt;up&lt;/code&gt; and &lt;code&gt;dir&lt;/code&gt; are aligned.&lt;/p&gt;&#xA;&lt;p&gt;The classic use case (and the reason I put this together) is to compute the world matrix of debug rays and gizmo arms. Using &lt;code&gt;lookAt&lt;/code&gt; to draw force applications and basis vectors is annoying and error-prone, all to draw entities that don&amp;rsquo;t have an orientation anyway.&lt;/p&gt;</description>
+    </item>
   </channel>
 </rss>
